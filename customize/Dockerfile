@@ -50,6 +50,8 @@ RUN true
 # TODO: should commandline scripts be copied at all?
 #COPY --from=build /usr/local/bin /usr/local/bin
 
+RUN apk -U upgrade && \
+    rm -rf /var/cache/apk/*
 
 HEALTHCHECK --interval=60s --timeout=10s --retries=10 CMD kong-health
 
