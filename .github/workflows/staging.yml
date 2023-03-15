@@ -2,6 +2,11 @@ name: staging
 
 on:
   workflow_dispatch:
+    inputs:
+      kong_tag:
+        description: 'Kong Docker Hub Tag'     
+        required: true
+        default: 'alpine'
   push:
     branches: kong-path-allow
 
@@ -63,7 +68,7 @@ jobs:
           push: true
           context: ./customize
           build-args: |
-            KONG_BASE=kong:alpine
+            KONG_BASE=kong:${{ inputs.kong_tag }}
             PLUGINS=kong-path-allow
           tags: |
             ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${{ secrets.IMAGE_NAME }}
